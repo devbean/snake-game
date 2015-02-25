@@ -30,7 +30,7 @@ GameController::~GameController()
 void GameController::snakeAteFood(Snake *snake, Food *food)
 {
     scene.removeItem(food);
-    delete food;
+//    delete food;
 
     addNewFood();
 }
