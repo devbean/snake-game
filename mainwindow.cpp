@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
       game(new GameController(*scene, this))
 {
     setCentralWidget(view);
-    resize(600, 600);
+    resize(500, 500);
 
     initScene();
     initSceneBackground();

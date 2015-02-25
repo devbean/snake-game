@@ -3,7 +3,7 @@
 #include "constants.h"
 #include "food.h"
 
-static const qreal FOOD_RADIUS = 3;
+static const qreal FOOD_RADIUS = 3.0 / 10.0 * TILE_SIZE;
 
 Food::Food(qreal x, qreal y)
 {

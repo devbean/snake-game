@@ -2,6 +2,7 @@
 #include <QGraphicsScene>
 #include <QKeyEvent>
 
+#include "constants.h"
 #include "gamecontroller.h"
 #include "food.h"
 #include "snake.h"
@@ -13,7 +14,7 @@ GameController::GameController(QGraphicsScene &scene, QObject *parent) :
 {
     timer.start( 1000/33 );
 
-    Food *a1 = new Food(0, -50);
+	Food *a1 = new Food(0, -50 / TILE_SIZE*TILE_SIZE);         //Make the food appear in the middle of the box near the coord
     scene.addItem(a1);
 
     scene.addItem(snake);
@@ -71,9 +72,9 @@ void GameController::addNewFood()
 
         x *= 10;
         y *= 10;
-    } while (snake->shape().contains(snake->mapFromScene(QPointF(x + 5, y + 5))));
+	} while (snake->shape().contains(snake->mapFromScene(QPointF(x + TILE_SIZE / 2, y + TILE_SIZE/2))));
 
-    Food *food = new Food(x , y);
+	Food *food = new Food(x / TILE_SIZE*TILE_SIZE, y / TILE_SIZE*TILE_SIZE);
     scene.addItem(food);
 }
 
