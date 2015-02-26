@@ -111,14 +111,14 @@ void Snake::moveLeft()
 {
     head.rx() -= SNAKE_SIZE;
     if (head.rx() < -100) {
-        head.rx() = 100;
+        head.rx() = 90;
     }
 }
 
 void Snake::moveRight()
 {
     head.rx() += SNAKE_SIZE;
-    if (head.rx() > 100) {
+    if (head.rx() >= 100) {
         head.rx() = -100;
     }
 }
@@ -127,14 +127,14 @@ void Snake::moveUp()
 {
     head.ry() -= SNAKE_SIZE;
     if (head.ry() < -100) {
-        head.ry() = 100;
+        head.ry() = 90;
     }
 }
 
 void Snake::moveDown()
 {
     head.ry() += SNAKE_SIZE;
-    if (head.ry() > 100) {
+    if (head.ry() >= 100) {
         head.ry() = -100;
     }
 }
