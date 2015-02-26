@@ -84,7 +84,7 @@ void Snake::advance(int step)
         tail << tailPoint;
         growing -= 1;
     } else {
-        tail.takeFirst();
+        tail.removeFirst();
         tail << head;
     }
 
