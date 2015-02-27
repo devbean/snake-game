@@ -65,8 +65,8 @@ void GameController::addNewFood()
     int x, y;
 
     do {
-        x = (int) (qrand() % 100) / 10;
-        y = (int) (qrand() % 100) / 10;
+		x = (int)(qrand() % 200) / 10 - 10;
+		y = (int)(qrand() % 200) / 10 - 10;
 
         x *= 10;
         y *= 10;
