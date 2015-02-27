@@ -13,7 +13,7 @@ GameController::GameController(QGraphicsScene &scene, QObject *parent) :
 {
     timer.start( 1000/33 );
 
-    Food *a1 = new Food(0, -50);
+	Food *a1 = new Food(0, -50);        
     scene.addItem(a1);
 
     scene.addItem(snake);
@@ -29,7 +29,6 @@ GameController::~GameController()
 void GameController::snakeAteFood(Snake *snake, Food *food)
 {
     scene.removeItem(food);
-    delete food;
 
     addNewFood();
 }
@@ -71,9 +70,9 @@ void GameController::addNewFood()
 
         x *= 10;
         y *= 10;
-    } while (snake->shape().contains(snake->mapFromScene(QPointF(x + 5, y + 5))));
+	} while (snake->shape().contains(snake->mapFromScene(QPointF(x + 5, y + 5))));
 
-    Food *food = new Food(x , y);
+	Food *food = new Food(x, y);
     scene.addItem(food);
 }
 

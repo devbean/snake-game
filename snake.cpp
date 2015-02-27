@@ -4,7 +4,7 @@
 #include "gamecontroller.h"
 #include "snake.h"
 
-static const qreal SNAKE_SIZE = 10;
+static const qreal SNAKE_SIZE = TILE_SIZE;
 
 Snake::Snake(GameController &controller) :
     head(0, 0),
@@ -84,7 +84,7 @@ void Snake::advance(int step)
         tail << tailPoint;
         growing -= 1;
     } else {
-        tail.takeFirst();
+        tail.removeFirst();
         tail << head;
     }
 
@@ -111,14 +111,14 @@ void Snake::moveLeft()
 {
     head.rx() -= SNAKE_SIZE;
     if (head.rx() < -100) {
-        head.rx() = 100;
+        head.rx() = 90;
     }
 }
 
 void Snake::moveRight()
 {
     head.rx() += SNAKE_SIZE;
-    if (head.rx() > 100) {
+    if (head.rx() >= 100) {
         head.rx() = -100;
     }
 }
@@ -127,14 +127,14 @@ void Snake::moveUp()
 {
     head.ry() -= SNAKE_SIZE;
     if (head.ry() < -100) {
-        head.ry() = 100;
+        head.ry() = 90;
     }
 }
 
 void Snake::moveDown()
 {
     head.ry() += SNAKE_SIZE;
-    if (head.ry() > 100) {
+    if (head.ry() >= 100) {
         head.ry() = -100;
     }
 }
