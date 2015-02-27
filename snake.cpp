@@ -67,6 +67,11 @@ void Snake::setMoveDirection(Direction direction)
     moveDirection = direction;
 }
 
+Snake::Direction Snake::currentDirection()
+{
+	return moveDirection;
+}
+
 void Snake::advance(int step)
 {
     if (!step) {

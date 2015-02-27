@@ -46,15 +46,27 @@ void GameController::handleKeyPressed(QKeyEvent *event)
 {
     switch (event->key()) {
         case Qt::Key_Left:
+			if (snake->currentDirection() == Snake::MoveRight){
+				break;
+			}
             snake->setMoveDirection(Snake::MoveLeft);
             break;
         case Qt::Key_Right:
+			if (snake->currentDirection() == Snake::MoveLeft){
+				break;
+			}
             snake->setMoveDirection(Snake::MoveRight);
             break;
         case Qt::Key_Up:
+			if (snake->currentDirection() == Snake::MoveDown){
+				break;
+			}
             snake->setMoveDirection(Snake::MoveUp);
             break;
         case Qt::Key_Down:
+			if (snake->currentDirection() == Snake::MoveUp){
+				break;
+			}
             snake->setMoveDirection(Snake::MoveDown);
             break;
     }
@@ -65,8 +77,8 @@ void GameController::addNewFood()
     int x, y;
 
     do {
-        x = (int) (qrand() % 100) / 10;
-        y = (int) (qrand() % 100) / 10;
+		x = (int)(qrand() % 200) / 10 - 10;
+		y = (int)(qrand() % 200) / 10 - 10;
 
         x *= 10;
         y *= 10;
