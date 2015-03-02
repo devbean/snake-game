@@ -3,6 +3,7 @@
 #include <qaction.h>
 #include <qmenubar.h>
 #include <qapplication.h>
+#include <qmessagebox.h>
 
 #include "constants.h"
 #include "gamecontroller.h"
@@ -56,6 +57,15 @@ void MainWindow::createActions()
 	resumeAction->setStatusTip(tr("Resume..."));
 	connect(resumeAction, &QAction::triggered, game, &GameController::resume);
 
+	gameHelpAction = new QAction(tr("Game &Help"), this);
+	gameHelpAction->setShortcut(tr("Ctrl+H"));
+	gameHelpAction->setStatusTip(tr("Help on this game"));
+	connect(gameHelpAction, &QAction::triggered, this, &MainWindow::gameHelp);
+
+	aboutAction = new QAction(tr("&About"), this);
+	aboutAction->setStatusTip(tr("Show the application's about box"));
+	connect(aboutAction, &QAction::triggered, this, &MainWindow::about);
+
 	aboutQtAction = new QAction(tr("About &Qt"), this);
 	aboutQtAction->setStatusTip(tr("Show the Qt library's About box"));
 	connect(aboutQtAction, &QAction::triggered, qApp, QApplication::aboutQt);
@@ -72,6 +82,8 @@ void MainWindow::createMenus()
 	options->addAction(exitAction);
 
 	QMenu *help = menuBar()->addMenu(tr("&Help"));
+	help->addAction(gameHelpAction);
+	help->addAction(aboutAction);
 	help->addAction(aboutQtAction);
 }
 
@@ -93,4 +105,17 @@ void MainWindow::initSceneBackground()
 void MainWindow::newGame()
 {
 	QTimer::singleShot(0, game, SLOT(gameOver()));
+}
+
+void MainWindow::about()
+{
+	QMessageBox::about(this, tr("About this Game"), tr("<h2>Snake Game</h2>"
+		"<p>Copyright &copy; XXX."
+		"<p>This game is a small Qt application. It is based on the demo in the GitHub written by Devbean."));
+}
+
+void MainWindow::gameHelp()
+{
+	QMessageBox::about(this, tr("Game Help"), tr("Using direction keys to control the snake to eat the food"
+		"<p>Space - pause & resume"));
 }

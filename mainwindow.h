@@ -18,6 +18,8 @@ public:
 private slots:
     void adjustViewSize();
 	void newGame();
+	void gameHelp();
+	void about();
 
 private:
 	void createActions();
@@ -36,6 +38,8 @@ private:
 	QAction *pauseAction;
 	QAction *resumeAction;
 	QAction *exitAction;
+	QAction *gameHelpAction;
+	QAction *aboutAction;
 	QAction *aboutQtAction;
 };
 
