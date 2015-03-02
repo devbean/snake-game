@@ -69,6 +69,18 @@ void GameController::handleKeyPressed(QKeyEvent *event)
 			}
             snake->setMoveDirection(Snake::MoveDown);
             break;
+		case Qt::Key_Space:
+			static int i = 0;
+			if (i == 0){
+				QTimer::singleShot(0, this, SLOT(pause()));
+			}
+			else{
+				QTimer::singleShot(0, this, SLOT(resume()));
+			}
+			i++;
+			if (i == 2){
+				i = 0;
+			}
     }
 }
 

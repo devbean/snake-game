@@ -17,15 +17,30 @@ public:
 
 private slots:
     void adjustViewSize();
+	void newGame();
+	void gameHelp();
+	void about();
 
 private:
+	void createActions();
+	void createMenus();
+
     void initScene();
     void initSceneBackground();
+
 
     QGraphicsScene *scene;
     QGraphicsView *view;
 
     GameController *game;
+
+	QAction *newGameAction;
+	QAction *pauseAction;
+	QAction *resumeAction;
+	QAction *exitAction;
+	QAction *gameHelpAction;
+	QAction *aboutAction;
+	QAction *aboutQtAction;
 };
 
 #endif // MAINWINDOW_H
