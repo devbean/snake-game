@@ -36,6 +36,7 @@ private:
 	QAction *pauseAction;
 	QAction *resumeAction;
 	QAction *exitAction;
+	QAction *aboutQtAction;
 };
 
 #endif // MAINWINDOW_H

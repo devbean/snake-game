@@ -2,6 +2,7 @@
 #include <QTimer>
 #include <qaction.h>
 #include <qmenubar.h>
+#include <qapplication.h>
 
 #include "constants.h"
 #include "gamecontroller.h"
@@ -54,6 +55,10 @@ void MainWindow::createActions()
 	resumeAction = new QAction(tr("&Resume"), this);
 	resumeAction->setStatusTip(tr("Resume..."));
 	connect(resumeAction, &QAction::triggered, game, &GameController::resume);
+
+	aboutQtAction = new QAction(tr("About &Qt"), this);
+	aboutQtAction->setStatusTip(tr("Show the Qt library's About box"));
+	connect(aboutQtAction, &QAction::triggered, qApp, QApplication::aboutQt);
 }
 
 void MainWindow::createMenus()
@@ -65,6 +70,9 @@ void MainWindow::createMenus()
 	options->addAction(resumeAction);
 	options->addSeparator();
 	options->addAction(exitAction);
+
+	QMenu *help = menuBar()->addMenu(tr("&Help"));
+	help->addAction(aboutQtAction);
 }
 
 void MainWindow::initScene()
