@@ -1,5 +1,7 @@
 #include <QGraphicsView>
 #include <QTimer>
+#include <qaction.h>
+#include <qmenubar.h>
 
 #include "constants.h"
 #include "gamecontroller.h"
@@ -12,7 +14,10 @@ MainWindow::MainWindow(QWidget *parent)
       game(new GameController(*scene, this))
 {
     setCentralWidget(view);
-    setFixedSize(500, 500);
+	view->setFixedSize(500, 500);
+
+	createActions();
+	createMenus();
 
     initScene();
     initSceneBackground();
@@ -30,6 +35,38 @@ void MainWindow::adjustViewSize()
     view->fitInView(scene->sceneRect(), Qt::KeepAspectRatioByExpanding);
 }
 
+void MainWindow::createActions()
+{
+	newGameAction = new QAction(tr("&New Game"), this);
+	newGameAction->setShortcuts(QKeySequence::New);
+	newGameAction->setStatusTip(tr("Start a new game"));
+	connect(newGameAction, &QAction::triggered, this, &MainWindow::newGame);
+
+	exitAction = new QAction(tr("&Exit"), this);
+	exitAction->setShortcut(tr("Ctrl+Q"));
+	exitAction->setStatusTip(tr("Exit the game"));
+	connect(exitAction, &QAction::triggered, this, &MainWindow::close);
+
+	pauseAction = new QAction(tr("&Pause"), this);
+	pauseAction->setStatusTip(tr("Pause..."));
+	connect(pauseAction, &QAction::triggered, game, &GameController::pause);
+
+	resumeAction = new QAction(tr("&Resume"), this);
+	resumeAction->setStatusTip(tr("Resume..."));
+	connect(resumeAction, &QAction::triggered, game, &GameController::resume);
+}
+
+void MainWindow::createMenus()
+{
+	QMenu *options = menuBar()->addMenu(tr("&Options"));
+	options->addAction(newGameAction);
+	options->addSeparator();
+	options->addAction(pauseAction);
+	options->addAction(resumeAction);
+	options->addSeparator();
+	options->addAction(exitAction);
+}
+
 void MainWindow::initScene()
 {
     scene->setSceneRect(-100, -100, 200, 200);
@@ -43,4 +80,9 @@ void MainWindow::initSceneBackground()
     p.drawRect(0, 0, TILE_SIZE, TILE_SIZE);
 
     view->setBackgroundBrush(QBrush(bg));
+}
+
+void MainWindow::newGame()
+{
+	QTimer::singleShot(0, game, SLOT(gameOver()));
 }
