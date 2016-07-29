@@ -25,3 +25,8 @@ HEADERS  += mainwindow.h \
     constants.h \
     snake.h \
     wall.h
+
+RESOURCES += \
+    res.qrc
+
+RC_FILE += myapp.rc

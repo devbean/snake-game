@@ -4,6 +4,7 @@
 #include "constants.h"
 #include "gamecontroller.h"
 #include "mainwindow.h"
+#include <QIcon>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -12,7 +13,9 @@ MainWindow::MainWindow(QWidget *parent)
       game(new GameController(*scene, this))
 {
     setCentralWidget(view);
-    resize(600, 600);
+//    resize(600, 600);
+    setFixedSize(600, 600);
+    setWindowIcon(QIcon(":/images/snake_ico"));
 
     initScene();
     initSceneBackground();

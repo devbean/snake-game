@@ -9,7 +9,8 @@
 GameController::GameController(QGraphicsScene &scene, QObject *parent) :
     QObject(parent),
     scene(scene),
-    snake(new Snake(*this))
+    snake(new Snake(*this)),
+    isPause(false)
 {
     timer.start( 1000/33 );
 
@@ -26,7 +27,7 @@ GameController::~GameController()
 {
 }
 
-void GameController::snakeAteFood(Snake *snake, Food *food)
+void GameController::snakeAteFood(Food *food)
 {
     scene.removeItem(food);
     delete food;
@@ -34,31 +35,36 @@ void GameController::snakeAteFood(Snake *snake, Food *food)
     addNewFood();
 }
 
-void GameController::snakeHitWall(Snake *snake, Wall *wall)
-{
-}
+//void GameController::snakeHitWall(Snake *snake, Wall *wall)
+//{
+//}
 
-void GameController::snakeAteItself(Snake *snake)
+void GameController::snakeAteItself()
 {
     QTimer::singleShot(0, this, SLOT(gameOver()));
 }
 
 void GameController::handleKeyPressed(QKeyEvent *event)
 {
-    switch (event->key()) {
-        case Qt::Key_Left:
-            snake->setMoveDirection(Snake::MoveLeft);
-            break;
-        case Qt::Key_Right:
-            snake->setMoveDirection(Snake::MoveRight);
-            break;
-        case Qt::Key_Up:
-            snake->setMoveDirection(Snake::MoveUp);
-            break;
-        case Qt::Key_Down:
-            snake->setMoveDirection(Snake::MoveDown);
-            break;
-    }
+    if (!isPause)
+        switch (event->key()) {
+            case Qt::Key_Left:
+                snake->setMoveDirection(Snake::MoveLeft);
+                break;
+            case Qt::Key_Right:
+                snake->setMoveDirection(Snake::MoveRight);
+                break;
+            case Qt::Key_Up:
+                snake->setMoveDirection(Snake::MoveUp);
+                break;
+            case Qt::Key_Down:
+                snake->setMoveDirection(Snake::MoveDown);
+                break;
+            case Qt::Key_Space:
+                pause();
+                break;
+        }
+    else resume();
 }
 
 void GameController::addNewFood()
@@ -90,12 +96,14 @@ void GameController::pause()
 {
     disconnect(&timer, SIGNAL(timeout()),
                &scene, SLOT(advance()));
+    isPause = true;
 }
 
 void GameController::resume()
 {
     connect(&timer, SIGNAL(timeout()),
             &scene, SLOT(advance()));
+    isPause = false;
 }
 
 bool GameController::eventFilter(QObject *object, QEvent *event)
