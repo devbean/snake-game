@@ -9,7 +9,7 @@ static const qreal SNAKE_SIZE = 10;
 Snake::Snake(GameController &controller) :
     head(0, 0),
     growing(7),
-    speed(3),
+    speed(5),
     moveDirection(NoMove),
     controller(controller)
 {
