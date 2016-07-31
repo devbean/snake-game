@@ -1,6 +1,7 @@
 #include <QEvent>
 #include <QGraphicsScene>
 #include <QKeyEvent>
+#include <QMessageBox>
 
 #include "gamecontroller.h"
 #include "food.h"
@@ -85,11 +86,20 @@ void GameController::addNewFood()
 
 void GameController::gameOver()
 {
-    scene.clear();
+    disconnect(&timer, SIGNAL(timeout()), &scene, SLOT(advance()));
+    if (QMessageBox::Yes == QMessageBox::information(NULL,
+                            tr("游戏结束"), tr("再来一局？"),
+                            QMessageBox::Yes | QMessageBox::No,
+                            QMessageBox::Yes)) {
+        connect(&timer, SIGNAL(timeout()), &scene, SLOT(advance()));
+        scene.clear();
 
-    snake = new Snake(*this);
-    scene.addItem(snake);
-    addNewFood();
+        snake = new Snake(*this);
+        scene.addItem(snake);
+        addNewFood();
+    } else {
+        exit(0);
+    }
 }
 
 void GameController::pause()
