@@ -1,2 +1,6 @@
 # Qt:
 *.user
+*.stash
+Makefile*
+release/
+debug/

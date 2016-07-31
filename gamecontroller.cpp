@@ -85,11 +85,6 @@ void GameController::addNewFood()
 
 void GameController::gameOver()
 {
-    // it is a test.
-    // also is a test.
-    /*
-     * It is also a test...
-     */
     scene.clear();
 
     snake = new Snake(*this);
