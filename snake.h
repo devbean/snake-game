@@ -24,6 +24,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
 
     void setMoveDirection(Direction direction);
+	Direction currentDirection();
 
 protected:
     void advance(int step);

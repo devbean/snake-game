@@ -13,7 +13,7 @@ GameController::GameController(QGraphicsScene &scene, QObject *parent) :
 {
     timer.start( 1000/33 );
 
-    Food *a1 = new Food(0, -50);
+	Food *a1 = new Food(0, -50);        
     scene.addItem(a1);
 
     scene.addItem(snake);
@@ -29,7 +29,6 @@ GameController::~GameController()
 void GameController::snakeAteFood(Snake *snake, Food *food)
 {
     scene.removeItem(food);
-    delete food;
 
     addNewFood();
 }
@@ -47,17 +46,41 @@ void GameController::handleKeyPressed(QKeyEvent *event)
 {
     switch (event->key()) {
         case Qt::Key_Left:
+			if (snake->currentDirection() == Snake::MoveRight){
+				break;
+			}
             snake->setMoveDirection(Snake::MoveLeft);
             break;
         case Qt::Key_Right:
+			if (snake->currentDirection() == Snake::MoveLeft){
+				break;
+			}
             snake->setMoveDirection(Snake::MoveRight);
             break;
         case Qt::Key_Up:
+			if (snake->currentDirection() == Snake::MoveDown){
+				break;
+			}
             snake->setMoveDirection(Snake::MoveUp);
             break;
         case Qt::Key_Down:
+			if (snake->currentDirection() == Snake::MoveUp){
+				break;
+			}
             snake->setMoveDirection(Snake::MoveDown);
             break;
+		case Qt::Key_Space:
+			static int i = 0;
+			if (i == 0){
+				QTimer::singleShot(0, this, SLOT(pause()));
+			}
+			else{
+				QTimer::singleShot(0, this, SLOT(resume()));
+			}
+			i++;
+			if (i == 2){
+				i = 0;
+			}
     }
 }
 
@@ -66,14 +89,14 @@ void GameController::addNewFood()
     int x, y;
 
     do {
-        x = (int) (qrand() % 100) / 10;
-        y = (int) (qrand() % 100) / 10;
+		x = (int)(qrand() % 200) / 10 - 10;
+		y = (int)(qrand() % 200) / 10 - 10;
 
         x *= 10;
         y *= 10;
-    } while (snake->shape().contains(snake->mapFromScene(QPointF(x + 5, y + 5))));
+	} while (snake->shape().contains(snake->mapFromScene(QPointF(x + 5, y + 5))));
 
-    Food *food = new Food(x , y);
+	Food *food = new Food(x, y);
     scene.addItem(food);
 }
 
