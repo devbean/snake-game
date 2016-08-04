@@ -87,7 +87,7 @@ void GameController::gameOver()
 {
     disconnect(&timer, SIGNAL(timeout()), &scene, SLOT(advance()));
     if (QMessageBox::Yes == QMessageBox::information(NULL,
-                            tr("游戏结束"), tr("再来一局？"),
+                            tr("Game Over"), tr("Again?"),
                             QMessageBox::Yes | QMessageBox::No,
                             QMessageBox::Yes)) {
         connect(&timer, SIGNAL(timeout()), &scene, SLOT(advance()));
