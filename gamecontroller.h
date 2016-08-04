@@ -18,9 +18,9 @@ public:
     GameController(QGraphicsScene &scene, QObject *parent = 0);
     ~GameController();
 
-    void snakeAteFood(Snake *snake, Food *food);
-    void snakeHitWall(Snake *snake, Wall *wall);
-    void snakeAteItself(Snake *snake);
+    void snakeAteFood(Food *food);
+//    void snakeHitWall(Snake *snake, Wall *wall);
+    void snakeAteItself();
 
 public slots:
     void pause();
@@ -38,6 +38,7 @@ private:
     QGraphicsScene &scene;
 
     Snake *snake;
+    bool isPause;
 };
 
 #endif // GAMECONTROLLER_H

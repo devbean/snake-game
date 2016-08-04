@@ -9,7 +9,7 @@ static const qreal SNAKE_SIZE = TILE_SIZE;
 Snake::Snake(GameController &controller) :
     head(0, 0),
     growing(7),
-    speed(3),
+    speed(5),
     moveDirection(NoMove),
     controller(controller)
 {
@@ -64,6 +64,14 @@ void Snake::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
 
 void Snake::setMoveDirection(Direction direction)
 {
+    if (moveDirection == MoveLeft && direction == MoveRight)
+        return;
+    if (moveDirection == MoveRight && direction == MoveLeft)
+        return;
+    if (moveDirection == MoveUp && direction == MoveDown)
+        return;
+    if (moveDirection == MoveDown && direction == MoveUp)
+        return;
     moveDirection = direction;
 }
 
@@ -152,13 +160,13 @@ void Snake::handleCollisions()
     foreach (QGraphicsItem *collidingItem, collisions) {
         if (collidingItem->data(GD_Type) == GO_Food) {
             // Let GameController handle the event by putting another apple
-            controller.snakeAteFood(this, (Food *)collidingItem);
+            controller.snakeAteFood((Food *)collidingItem);
             growing += 1;
         }
     }
 
     // Check snake eating itself
     if (tail.contains(head)) {
-        controller.snakeAteItself(this);
+        controller.snakeAteItself();
     }
 }
