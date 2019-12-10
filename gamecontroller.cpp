@@ -2,10 +2,13 @@
 #include <QGraphicsScene>
 #include <QKeyEvent>
 #include <QMessageBox>
+#include <QAction>
+#include <iostream>
 
 #include "gamecontroller.h"
 #include "food.h"
 #include "snake.h"
+#include "mainwindow.h"
 
 GameController::GameController(QGraphicsScene &scene, QObject *parent) :
     QObject(parent),
@@ -20,8 +23,9 @@ GameController::GameController(QGraphicsScene &scene, QObject *parent) :
 
     scene.addItem(snake);
     scene.installEventFilter(this);
-
-    resume();
+    //resume();
+    connect(&timer, SIGNAL(timeout()), &scene, SLOT(advance()));
+   isPause = false;
 }
 
 GameController::~GameController()
@@ -106,15 +110,22 @@ void GameController::pause()
     disconnect(&timer, SIGNAL(timeout()),
                &scene, SLOT(advance()));
     isPause = true;
+    setResume();
 }
 
 void GameController::resume()
 {
-    connect(&timer, SIGNAL(timeout()),
-            &scene, SLOT(advance()));
-    isPause = false;
+    connect(&timer, SIGNAL(timeout()), &scene, SLOT(advance()));
+   isPause = false;
+   setResume();
 }
-
+void GameController :: setResume(){
+    if(isPause == true){
+        resumeAction->setEnabled(true);
+    }else{
+        resumeAction->setEnabled(false);
+    }
+}
 bool GameController::eventFilter(QObject *object, QEvent *event)
 {
     if (event->type() == QEvent::KeyPress) {

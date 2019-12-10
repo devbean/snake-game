@@ -23,7 +23,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 	createActions();
 	createMenus();
-
     initScene();
     initSceneBackground();
 
@@ -58,7 +57,9 @@ void MainWindow::createActions()
 
 	resumeAction = new QAction(tr("&Resume"), this);
 	resumeAction->setStatusTip(tr("Resume..."));
-	connect(resumeAction, &QAction::triggered, game, &GameController::resume);
+    resumeAction->setEnabled(false);
+    game->setResumeAction(resumeAction);
+    connect(resumeAction, &QAction::triggered, game, &GameController::resume);
 
 	gameHelpAction = new QAction(tr("Game &Help"), this);
 	gameHelpAction->setShortcut(tr("Ctrl+H"));
